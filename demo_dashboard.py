@@ -146,15 +146,19 @@ def create_fraud_detection_dashboard():
         ax6.set_title('Performance Metrics', fontsize=14, fontweight='bold', pad=20)
 
     ax7 = plt.subplot(3, 4, 7)
-    if 'Time' in df.columns:
+    if 'Time' in df.columns and 'Class' in df.columns:
 
         df['time_interval'] = pd.cut(df['Time'], bins=10)
         volume_by_time = df.groupby('time_interval').size()
-        fraud_by_time = df[df['Class'] == 1].groupby('time_interval').size() if 1 in df['Class'].values else pd.Series()
+        fraud_by_time = df[df['Class'] == 1].groupby('time_interval').size() if 1 in df['Class'].values else pd.Series(dtype=int)
 
         x_pos = range(len(volume_by_time))
         bars1 = ax7.bar(x_pos, volume_by_time.values, alpha=0.7, label='Total', color='#45B7D1')
-        bars2 = ax7.bar(x_pos, fraud_by_time.values, alpha=0.8, label='Fraudulent', color='#DC143C')
+        if len(fraud_by_time) > 0:
+            fraud_values = fraud_by_time.reindex(volume_by_time.index, fill_value=0).values
+            bars2 = ax7.bar(x_pos, fraud_values, alpha=0.8, label='Fraudulent', color='#DC143C')
+        else:
+            bars2 = ax7.bar(x_pos, [0]*len(volume_by_time), alpha=0.8, label='Fraudulent', color='#DC143C')
 
         ax7.set_title('Transaction Volume by Time', fontsize=14, fontweight='bold')
         ax7.set_xlabel('Time Interval')
