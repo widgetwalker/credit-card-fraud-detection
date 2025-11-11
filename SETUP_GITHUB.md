@@ -14,8 +14,8 @@
 After creating the repository, run these commands:
 
 ```bash
-# Add remote (replace YOUR_USERNAME with your GitHub username)
-git remote add origin https://github.com/YOUR_USERNAME/credit-card-fraud-detection.git
+# Add remote
+git remote add origin https://github.com/widgetwalker/credit-card-fraud-detection.git
 
 # Push to GitHub
 git push -u origin main
@@ -33,5 +33,5 @@ gh repo create credit-card-fraud-detection --public --source=. --remote=origin -
 ## Verify
 
 After pushing, verify your repository is live at:
-`https://github.com/YOUR_USERNAME/credit-card-fraud-detection`
+`https://github.com/widgetwalker/credit-card-fraud-detection`
 
